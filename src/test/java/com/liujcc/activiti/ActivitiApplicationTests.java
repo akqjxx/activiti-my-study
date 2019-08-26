@@ -8,6 +8,7 @@ import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
 import org.activiti.api.task.model.payloads.CompleteTaskPayload;
 import org.activiti.api.task.runtime.TaskRuntime;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.repository.Deployment;
@@ -33,7 +34,7 @@ public class ActivitiApplicationTests {
     @Autowired
     private TaskRuntime taskRuntime;
     @Autowired
-    private History
+    private HistoryService historyService;
 
     @Autowired
     private SecurityUtil securityUtil;
