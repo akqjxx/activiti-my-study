@@ -5,6 +5,9 @@ import com.liujcc.activiti.conf.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.api.process.model.payloads.DeleteProcessPayload;
 import org.activiti.api.process.runtime.ProcessRuntime;
+import org.activiti.api.task.model.builders.TaskPayloadBuilder;
+import org.activiti.api.task.model.payloads.CompleteTaskPayload;
+import org.activiti.api.task.runtime.TaskRuntime;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.repository.Deployment;
@@ -27,6 +30,10 @@ public class ActivitiApplicationTests {
     ProcessEngine processEngine;
     @Autowired
     ProcessRuntime processRuntime;
+    @Autowired
+    private TaskRuntime taskRuntime;
+    @Autowired
+    private History
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -82,7 +89,8 @@ public class ActivitiApplicationTests {
                          "2a0a7c78-c5ba-11e9-9bfd-507b9d81ab9d",
                          "删除"));
 
-
+//        CompleteTaskPayload dd = TaskPayloadBuilder.complete().withTaskId("dd").build();
+        taskRuntime.complete(new CompleteTaskPayload());
     }
 
 }
