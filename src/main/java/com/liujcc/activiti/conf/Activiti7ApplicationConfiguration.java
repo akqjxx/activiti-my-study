@@ -25,75 +25,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Configuration
-@EnableWebSecurity
 public class Activiti7ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
     private Logger logger = LoggerFactory.getLogger(Activiti7ApplicationConfiguration.class);
+    @Bean
+    public UserDetailsService myUserDetailsService() {
 
-    /* @Override
-     @Autowired
-     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-         auth.userDetailsService(myUserDetailsService());
-     }
+        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 
-     @Bean
-     public UserDetailsService myUserDetailsService() {
+        String[][] usersGroupsAndRoles = {
+                {"system", "password", "ROLE_ACTIVITI_USER"},
+                {"admin", "password", "ROLE_ACTIVITI_ADMIN"},
+        };
 
-         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-
-         String[][] usersGroupsAndRoles = {
-                 {"mbergljung", "1234", "ROLE_ACTIVITI_USER", "GROUP_activitiTraining"},
-                 {"testuser", "1234", "ROLE_ACTIVITI_USER", "GROUP_activitiTraining"},
-                 {"system", "1234", "ROLE_ACTIVITI_USER"},
-                 {"admin", "1234", "ROLE_ACTIVITI_ADMIN"},
-         };
-
-         for (String[] user : usersGroupsAndRoles) {
-             List<String> authoritiesStrings = Arrays.asList(Arrays.copyOfRange(user, 2, user.length));
-             logger.info("> Registering new user: " + user[0] + " with the following Authorities[" + authoritiesStrings + "]");
-             inMemoryUserDetailsManager.createUser(
-                     new User(
-                             user[0],
-                             passwordEncoder().encode(user[1]),
-                             authoritiesStrings.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList())));
-         }
+        for (String[] user : usersGroupsAndRoles) {
+            List<String> authoritiesStrings = Arrays.asList(Arrays.copyOfRange(user, 2, user.length));
+            logger.info("> Registering new user: " + user[0] + " with the following Authorities[" + authoritiesStrings + "]");
+            inMemoryUserDetailsManager.createUser(new User(user[0], passwordEncoder().encode(user[1]),
+                    authoritiesStrings.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList())));
+        }
 
 
-         return inMemoryUserDetailsManager;
-     }
- */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+        return inMemoryUserDetailsManager;
 
-        ThreadLocal<SimpleDateFormat> simpleDateFormatThreadLocal = ThreadLocal.withInitial(() ->
-                new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
-        );
-
-        SimpleDateFormat simpleDateFormat = simpleDateFormatThreadLocal.get();
-        logger.debug(simpleDateFormat.format(new Date()));
-
-        http.authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf()
-                .disable();
-
-
-       /* http
-                .csrf().disable()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();*/
     }
 
-   /* @Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }*/
+    }
+
 
 }

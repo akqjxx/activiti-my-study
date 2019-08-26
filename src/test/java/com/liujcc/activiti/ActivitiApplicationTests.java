@@ -1,6 +1,7 @@
 package com.liujcc.activiti;
 
 import com.google.common.collect.Maps;
+import com.liujcc.activiti.conf.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.api.process.model.payloads.DeleteProcessPayload;
 import org.activiti.api.process.runtime.ProcessRuntime;
@@ -26,6 +27,10 @@ public class ActivitiApplicationTests {
     ProcessEngine processEngine;
     @Autowired
     ProcessRuntime processRuntime;
+
+    @Autowired
+    private SecurityUtil securityUtil;
+
 
     @Test
     public void bpmnJSDeployment() {
@@ -71,6 +76,7 @@ public class ActivitiApplicationTests {
 //        processEngine.getRuntimeService().deleteProcessInstance(
 //                "e2c6ca11-c5b2-11e9-a13d-507b9d81ab9d",
 //                "删除");
+        securityUtil.logInAs("system");
          processRuntime.delete(
                  new DeleteProcessPayload(
                          "2a0a7c78-c5ba-11e9-9bfd-507b9d81ab9d",
