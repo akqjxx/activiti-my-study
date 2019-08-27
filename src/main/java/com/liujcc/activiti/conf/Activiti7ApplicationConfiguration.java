@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class Activiti7ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
     private Logger logger = LoggerFactory.getLogger(Activiti7ApplicationConfiguration.class);
+
     @Bean
     public UserDetailsService myUserDetailsService() {
 

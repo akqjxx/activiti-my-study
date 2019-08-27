@@ -10,7 +10,7 @@ spring:
     async-executor-activate: true
     copy-variables-to-local-for-tasks: false
   datasource:
-    url: jdbc:mysql://192.168.2.120:3360/activiti?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://192.168.0.120:3307/master?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&nullCatalogMeansCurrent=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

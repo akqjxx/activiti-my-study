@@ -56,9 +56,9 @@ public class ActivitiApplicationTests {
     public void contextLoads() {
         Deployment deployment = processEngine.getRepositoryService()
                 .createDeployment()
-                .addClasspathResource("processes/processVariables.png")
-                .addClasspathResource("processes/processVariables.bpmn")
-                .name("初始流程部署")
+                .addClasspathResource("processes/group.png")
+                .addClasspathResource("processes/group.bpmn")
+                .name("分组")
                 .deploy();
         log.info("部署id=[{}]", deployment.getId());
         log.info("部署名称=[{}]", deployment.getName());
@@ -66,7 +66,7 @@ public class ActivitiApplicationTests {
 
     @Test
     public void createProcessInstance() {
-        String processDefinitionKey = "Process_1";
+        String processDefinitionKey = "processVariables";
         HashMap<String, Object> hashMap = Maps.newHashMap();
         hashMap.put("A", "AAA");
         hashMap.put("B", "BBB");
