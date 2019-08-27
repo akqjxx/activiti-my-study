@@ -89,7 +89,6 @@ public class ProcessDefinitionsController {
         Task task = taskService.createTaskQuery()
                 .processInstanceId(processInstanceId)
                 .singleResult();
-
         ProcessDefinition processDefinition = processRuntime.processDefinition(task.getProcessDefinitionId());
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
 

@@ -56,9 +56,9 @@ public class ActivitiApplicationTests {
     public void contextLoads() {
         Deployment deployment = processEngine.getRepositoryService()
                 .createDeployment()
-                .addClasspathResource("processes/group.png")
-                .addClasspathResource("processes/group.bpmn")
-                .name("分组")
+                .addClasspathResource("processes/helloword/helloword.png")
+                .addClasspathResource("processes/helloword/helloword.bpmn")
+                .name("helloword复杂流程设计")
                 .deploy();
         log.info("部署id=[{}]", deployment.getId());
         log.info("部署名称=[{}]", deployment.getName());
@@ -66,17 +66,31 @@ public class ActivitiApplicationTests {
 
     @Test
     public void createProcessInstance() {
-        String processDefinitionKey = "processVariables";
+        String processDefinitionKey = "helloword";
         HashMap<String, Object> hashMap = Maps.newHashMap();
-        hashMap.put("A", "AAA");
-        hashMap.put("B", "BBB");
-        hashMap.put("C", "CCC");
+//        hashMap.put("A", "AAA");
+//        hashMap.put("B", "BBB");
+         hashMap.put("day", "10");
         ProcessInstance processInstance = processEngine.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, hashMap);
 
         log.info("流程实例ID:[{}]", processInstance.getId());//流程实例ID    101
         log.info("流程定义ID:[{}]", processInstance.getProcessDefinitionId());//流程定义ID   helloworld:1:4
 
+    }
+    /**
+     * 完成我的任务
+     */
+    @Test
+    public void completeMyPersonalTask() {
+        //任务ID
+        String taskId = "8f46b884-c8ab-11e9-9016-005056c00008";
+        HashMap<String, Object> hashMap = Maps.newHashMap();
+         hashMap.put("msg", "驳回");
+        //hashMap.put("day", 10);
+        processEngine.getTaskService()//与正在执行的任务管理相关的Service
+                .complete(taskId, hashMap);
+        log.info("完成任务：任务ID：[{}]", taskId);
     }
 
     @Test
@@ -91,7 +105,7 @@ public class ActivitiApplicationTests {
                          "删除"));
 
 //        CompleteTaskPayload dd = TaskPayloadBuilder.complete().withTaskId("dd").build();
-        taskRuntime.complete(new CompleteTaskPayload());
+        //taskRuntime.complete(new CompleteTaskPayload());
     }
 
 }
